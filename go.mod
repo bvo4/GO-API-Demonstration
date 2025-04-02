@@ -1,0 +1,3 @@
+module API_DEMONSTRATION
+
+go 1.24.2
