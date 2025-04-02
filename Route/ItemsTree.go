@@ -1,18 +1,19 @@
 package Route
 
 import (
+	"API_DEMONSTRATION/HTTPServices"
 	"API_DEMONSTRATION/Models"
 )
 
-func GetItemsTreeOrderID(GTIN string) Models.ItemsTreeResult {
+func GetItemsTreeOrderID(OrderId string) Models.ItemsTreeResult {
 
 	var Test Models.ItemsTreeResult
-
 	Test.GTIN = "TEST"
 	Test.LotNum = "TEST"
 	Test.Qty = 2
+	//Get the URI needed for the HTTP Request
 
-	println("Placeholder")
+	HTTPServices.Write_HTTP_GET(OrderId)
 
 	return Test
 }

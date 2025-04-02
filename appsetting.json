@@ -1,0 +1,13 @@
+{
+    "IsDebug": true,
+    "ConnectionStrings": {
+      "DefaultConnection": "PLACEHOLDER"
+    },
+    "Credentials": {
+        "Key": "ocp-apim-subscription-key",
+        "Value": "[REDACTED]"
+      },
+      "EmailSettings": {
+      }
+
+  }
