@@ -1,6 +1,7 @@
 package main
 
 import (
+	"API_DEMONSTRATION/Controller"
 	"API_DEMONSTRATION/Models"
 	"encoding/json"
 	"fmt"
@@ -36,7 +37,9 @@ func main() {
 	/* Get the API Credentials */
 	API_Credentials := GetConfig()
 
-	fmt.Println(API_Credentials.ConnectionString)
-	fmt.Println(API_Credentials.Credentials.API_KEY)
-	fmt.Println(API_Credentials.Credentials.API_VALUE)
+	/* Get Order Info */
+
+	/* Input Order Info into API */
+	Controller.GetItemsTreeOrderID()
+
 }
