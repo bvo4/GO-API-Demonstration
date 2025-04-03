@@ -6,7 +6,7 @@ type Credentials struct {
 }
 
 type Settings struct {
-	ConnectionString   string
-	_Credentials       Credentials
-	EmailServerAddress string
+	IsDebug          bool
+	ConnectionString string
+	Credentials      Credentials
 }
