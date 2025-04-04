@@ -1,4 +1,4 @@
-package HTTPServices
+package HTTPModels
 
 import "API_DEMONSTRATION/Models"
 

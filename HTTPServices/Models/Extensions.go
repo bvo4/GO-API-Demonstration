@@ -1,4 +1,4 @@
-package HTTPServices
+package HTTPModels
 
 var ISDEBUG bool = false
 
