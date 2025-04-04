@@ -2,7 +2,7 @@ package HTTPServices
 
 var ISDEBUG bool = false
 
-func FormatAPIKey(API_Credentials *HEADER_VALUES) {
+func FormatAPIKey(API_Credentials *HEADER_VALUES) map[string]string {
 
 	KeyValues := make(map[string]string)
 
@@ -15,4 +15,5 @@ func FormatAPIKey(API_Credentials *HEADER_VALUES) {
 			KeyValues[j] = API_Credentials.HEADER_VALUES[i]
 		}
 	}
+	return KeyValues
 }
