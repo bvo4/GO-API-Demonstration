@@ -22,8 +22,8 @@ func ReadCSV() []Models.OrderContents {
 }
 
 func GetDirectory() string {
-	DirectoryPath, err := os.UserHomeDir()
-	DirectoryPath += "\\Documents\\Go API Demonstration\\GO-API-Demonstration\\File_Examples\\"
+	DirectoryPath, err := os.Getwd()
+	DirectoryPath += "\\File_Examples\\"
 	CheckError(err)
 
 	return DirectoryPath

@@ -9,13 +9,14 @@ import (
 
 func GetConfig() Models.Settings {
 
-	DirectoryPath, err := os.UserHomeDir()
+	//Get Current Directory Path
+	DirectoryPath, err := os.Getwd()
 
 	if err != nil {
 		log.Fatal(err)
 	}
 
-	DirectoryPath += "\\Documents\\Go API Demonstration\\GO-API-Demonstration\\appsetting.json"
+	DirectoryPath += "\\appsetting.json"
 
 	configFile, err := os.Open(DirectoryPath)
 	defer configFile.Close()

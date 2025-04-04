@@ -8,8 +8,7 @@ func BuildOrderIdURI(OrderId string) string {
 		return ""
 	}
 
-	RequestURI := fmt.Sprintf("REDACTED", OrderId)
-
+	RequestURI := fmt.Sprintf("https://onescan.lspedia.com/ext/api/orders/%s/itemstree", OrderId)
 	return RequestURI
 
 }
