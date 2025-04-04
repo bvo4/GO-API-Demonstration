@@ -25,7 +25,7 @@ func main() {
 
 func PrintOrderID(CSV_RESULTS []Models.OrderContents) {
 	for i := range len(CSV_RESULTS) {
-		fmt.Printf("OrderID: %s", CSV_RESULTS[i].Order_ID)
+		fmt.Printf("OrderID: %s \n", CSV_RESULTS[i].Order_ID)
 	}
 }
 

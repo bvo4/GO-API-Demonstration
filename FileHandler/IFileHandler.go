@@ -21,6 +21,7 @@ func ReadCSV() []Models.OrderContents {
 	return ReadFile(FilePaths)
 }
 
+/* Credit: https://stackoverflow.com/questions/18537257/how-to-get-the-directory-of-the-currently-running-file */
 func GetDirectory() string {
 	DirectoryPath, err := os.Getwd()
 	DirectoryPath += "\\File_Examples\\"
