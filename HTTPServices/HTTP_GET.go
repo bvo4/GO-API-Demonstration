@@ -2,19 +2,23 @@ package HTTPServices
 
 import (
 	HTTPServices "API_DEMONSTRATION/HTTPServices/Models"
+	"API_DEMONSTRATION/Models"
 	"crypto/tls"
+	"encoding/json"
 	"io"
 	"net/http"
 )
 
 /* Credit: https://github.com/bradfitz/exp-httpclient/blob/master/problems.md */
-func Write_HTTP_GET(OrderId string, API_Credentials *HTTPServices.HEADER_VALUES) {
+func Write_HTTP_GET(OrderId string, API_Credentials *HTTPServices.HEADER_VALUES) Models.ItemsTreeResult {
 	URI := BuildOrderIdURI(OrderId)
 
 	HEADER_PARAMS := HTTPServices.FormatAPIKey(API_Credentials)
 	ResponseBody := Send_HTTP_GET(URI, HEADER_PARAMS)
 
 	//Decode the json response
+	Results := DecodeItemsTreeResponse(ResponseBody)
+	return Results
 }
 
 /*
@@ -60,4 +64,12 @@ func AddHTTPHeaders(r http.Request, HEADER_PARAMS map[string]string) {
 	for key, value := range HEADER_PARAMS {
 		r.Header.Add(key, value)
 	}
+}
+
+/* https://stackoverflow.com/questions/47270595/how-to-parse-json-string-to-struct */
+func DecodeItemsTreeResponse(JSONBODY string) Models.ItemsTreeResult {
+	var API_Credentials Models.ItemsTreeResult
+
+	json.Unmarshal([]byte(JSONBODY), &API_Credentials)
+	return API_Credentials
 }
