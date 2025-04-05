@@ -18,7 +18,7 @@ func main() {
 
 	//MasterService.GetSqlConfig(API_Credentials.ConnectionString)
 
-	APIRouter.InitiateRouter()
+	APIRouter.InitiateRouter(API_Credentials.Credentials)
 
 	os.Exit(1)
 
