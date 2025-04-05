@@ -1,6 +1,7 @@
 package main
 
 import (
+	"API_DEMONSTRATION/APIRouter"
 	"API_DEMONSTRATION/Controller"
 	"API_DEMONSTRATION/FileHandler"
 	"API_DEMONSTRATION/MasterService"
@@ -15,7 +16,9 @@ func main() {
 	/* Get the API Credentials */
 	API_Credentials := FileHandler.GetConfig()
 
-	MasterService.GetSqlConfig(API_Credentials.ConnectionString)
+	//MasterService.GetSqlConfig(API_Credentials.ConnectionString)
+
+	APIRouter.InitiateRouter()
 
 	os.Exit(1)
 
