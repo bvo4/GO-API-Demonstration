@@ -3,8 +3,10 @@ package main
 import (
 	"API_DEMONSTRATION/Controller"
 	"API_DEMONSTRATION/FileHandler"
+	"API_DEMONSTRATION/MasterService"
 	"API_DEMONSTRATION/Models"
 	"fmt"
+	"os"
 )
 
 func main() {
@@ -13,6 +15,10 @@ func main() {
 	/* Get the API Credentials */
 	API_Credentials := FileHandler.GetConfig()
 
+	MasterService.GetSqlConfig(API_Credentials.ConnectionString)
+
+	os.Exit(1)
+
 	/* Get Order Info from local .CSV file */
 	CSV_RESULTS := FileHandler.ReadCSV()
 
@@ -20,7 +26,7 @@ func main() {
 	PrintOrderID(CSV_RESULTS)
 
 	/* Input Order Info into API */
-	SEND_API_ORDERS(API_Credentials.Credentials, CSV_RESULTS)
+	SEND_API_ORDERS(API_Credentials, CSV_RESULTS)
 }
 
 func PrintOrderID(CSV_RESULTS []Models.OrderContents) {
@@ -29,9 +35,9 @@ func PrintOrderID(CSV_RESULTS []Models.OrderContents) {
 	}
 }
 
-func SEND_API_ORDERS(API_CREDENTIALS Models.Credentials, CSV_RESULTS []Models.OrderContents) {
+func SEND_API_ORDERS(API_CREDENTIALS Models.Settings, CSV_RESULTS []Models.OrderContents) {
 	for i := range len(CSV_RESULTS) {
-		Controller.GetItemsTreeOrderID(API_CREDENTIALS, CSV_RESULTS[i].Order_ID)
-		//MasterService.InsertSSCC(API_Credentials.ConnectionString, CSV_RESULTS[i])
+		EpcisDtl := Controller.GetItemsTreeOrderID(API_CREDENTIALS.Credentials, CSV_RESULTS[i].Order_ID)
+		MasterService.InsertSSCC(API_CREDENTIALS.ConnectionString, EpcisDtl)
 	}
 }
