@@ -1,8 +1,11 @@
 package Models
 
 type ItemsTreeResult struct {
-	SerialNumber string
+	UPC          string
+	NDC          string
 	GTIN         string
+	SerialNumber string
 	LotNum       string
+	Expiry       date
 	Qty          int
 }

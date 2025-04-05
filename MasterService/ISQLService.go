@@ -9,7 +9,7 @@ import (
 /* https://go.dev/doc/database/open-handle */
 func GetSqlConfig(ConnectionString string) *sql.DB {
 
-	db, err := sql.Open("mysql", ConnectionString)
+	db, _ := sql.Open("mysql", ConnectionString)
 
 	if err := db.Ping(); err != nil {
 		log.Fatal(err)

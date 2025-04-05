@@ -4,7 +4,6 @@ import (
 	HTTPServices "API_DEMONSTRATION/HTTPServices/Models"
 	"crypto/tls"
 	"io"
-	"log"
 	"net/http"
 )
 
@@ -13,7 +12,9 @@ func Write_HTTP_GET(OrderId string, API_Credentials *HTTPServices.HEADER_VALUES)
 	URI := BuildOrderIdURI(OrderId)
 
 	HEADER_PARAMS := HTTPServices.FormatAPIKey(API_Credentials)
-	Send_HTTP_GET(URI, HEADER_PARAMS)
+	ResponseBody := Send_HTTP_GET(URI, HEADER_PARAMS)
+
+	//Decode the json response
 }
 
 /*
@@ -22,7 +23,7 @@ func Write_HTTP_GET(OrderId string, API_Credentials *HTTPServices.HEADER_VALUES)
 // https://stackoverflow.com/questions/54401790/how-can-i-use-http-1-x-in-client-and-server
 // https://stackoverflow.com/questions/57420833/tls-no-renegotiation-error-on-http-request
 */
-func Send_HTTP_GET(URI string, HEADER_PARAMS map[string]string) {
+func Send_HTTP_GET(URI string, HEADER_PARAMS map[string]string) string {
 	//Get the Request URI using the OrderID
 	r, err := http.NewRequest(http.MethodGet, URI, nil)
 	if err != nil {
@@ -49,7 +50,9 @@ func Send_HTTP_GET(URI string, HEADER_PARAMS map[string]string) {
 
 	body, err := io.ReadAll(response.Body)
 	sb := string(body)
-	log.Printf(sb)
+	//log.Printf(sb)
+
+	return sb
 }
 
 /* Credit: https://stackoverflow.com/questions/8018719/iterating-through-a-golang-map */

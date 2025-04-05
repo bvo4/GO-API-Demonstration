@@ -32,5 +32,6 @@ func PrintOrderID(CSV_RESULTS []Models.OrderContents) {
 func SEND_API_ORDERS(API_CREDENTIALS Models.Credentials, CSV_RESULTS []Models.OrderContents) {
 	for i := range len(CSV_RESULTS) {
 		Controller.GetItemsTreeOrderID(API_CREDENTIALS, CSV_RESULTS[i].Order_ID)
+		//MasterService.InsertSSCC(API_Credentials.ConnectionString, CSV_RESULTS[i])
 	}
 }
