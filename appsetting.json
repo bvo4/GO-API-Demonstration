@@ -1,8 +1,0 @@
-{
-    "IsDebug": true,
-    "ConnectionString": "PLACEHOLDER",
-    "Credentials": {
-        "API_KEY": "ocp-apim-subscription-key",
-        "API_VALUE": "[REDACTED]"
-      }
-  }
