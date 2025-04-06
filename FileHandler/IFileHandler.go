@@ -15,6 +15,7 @@ func CheckError(Exception error) {
 }
 
 /* Credit: https://pkg.go.dev/os#ReadDir */
+/* Opens the /File_Examples/ Directory and scan all .csv files */
 func ReadCSV() []Models.OrderContents {
 	DirectoryPath := GetDirectory() //Get base directory
 	FilePaths := GetFileList(DirectoryPath)
@@ -31,6 +32,7 @@ func GetDirectory() string {
 }
 
 /* https://stackoverflow.com/questions/14668850/list-directory-in-go */
+/* Checks the given Directory Path and scans for every file found inside hte directory */
 func GetFileList(DirectoryPath string) []string {
 	_, err := os.ReadDir(DirectoryPath)
 	CheckError(err)
@@ -47,11 +49,13 @@ func GetFileList(DirectoryPath string) []string {
 }
 
 /* Credit:  https://stackoverflow.com/questions/24999079/reading-csv-file-in-go */
+/* Goes through all .csv files and reads their contents, converting them into OrderContents array */
 func ReadFile(FilePaths []string) []Models.OrderContents {
 
 	var AllOrders []Models.OrderContents
 
 	for i := range len(FilePaths) {
+		//Opens the file
 		FileContents, err := os.Open(FilePaths[i])
 		CheckError(err)
 
@@ -65,11 +69,10 @@ func ReadFile(FilePaths []string) []Models.OrderContents {
 		Temp := ProcessFile(records)
 		AllOrders = append(AllOrders, Temp)
 	}
-
 	return AllOrders
 }
 
-/* Goes through the file contents and converts them into  */
+/* Goes through the file contents and converts them into OrderContents */
 func ProcessFile(Records [][]string) Models.OrderContents {
 	var Temp Models.OrderContents
 	for i := range len(Records) {

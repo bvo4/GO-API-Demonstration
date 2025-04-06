@@ -7,6 +7,7 @@ type OrderContents struct {
 	LotNum       string
 }
 
+/* Converts the .csv file structure and rows into Order Contents */
 func ToOrderContents(Records [][]string, i int) OrderContents {
 	var Temp OrderContents
 	Temp.Order_ID = Records[i][0]

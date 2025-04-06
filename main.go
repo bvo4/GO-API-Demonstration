@@ -27,12 +27,14 @@ func main() {
 	//APIRouter.InitiateRouter(API_Credentials.Credentials)
 }
 
+/* Debug:  Prints out the list of Order Ids acquired */
 func PrintOrderID(CSV_RESULTS []Models.OrderContents) {
 	for i := range len(CSV_RESULTS) {
 		fmt.Printf("OrderID: %s \n", CSV_RESULTS[i].Order_ID)
 	}
 }
 
+/* Takes the OrderContents array and inserts all items found into the SQL Database */
 func SEND_API_ORDERS(API_CREDENTIALS Models.Settings, CSV_RESULTS []Models.OrderContents) {
 	for i := range len(CSV_RESULTS) {
 		EpcisDtl := Controller.GetItemsTreeOrderID(API_CREDENTIALS.Credentials, CSV_RESULTS[i].Order_ID)
