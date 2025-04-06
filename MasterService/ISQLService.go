@@ -5,23 +5,17 @@ import (
 	"fmt"
 	"log"
 
-	"github.com/go-sql-driver/mysql"
-	_ "github.com/lib/pq"
+	_ "github.com/denisenkom/go-mssqldb"
 )
 
 // _ is needed for pq to keep it in since it's needed on top of /sql
 
 /* https://go.dev/doc/database/open-handle */
 func GetSqlConfig(ConnectionString string) *sql.DB {
+	connString := fmt.Sprintf("server=%s;user id=%s;password=%s;port=%d",
+		"DESKTOP-91IQ0A5", "", "", 1433)
 
-	cfg := mysql.Config{
-		User:   "postgres",
-		Passwd: "ResearchStationNoc10",
-		Net:    "tcp",
-		Addr:   "golangapitest.cf8c2qy4a0f6.us-east-2.rds.amazonaws.com,5432",
-		DBName: "golangapitest",
-	}
-	db, err := sql.Open("postgres", cfg.FormatDSN())
+	db, err := sql.Open("mssql", connString)
 
 	if err != nil {
 		log.Fatal((err))

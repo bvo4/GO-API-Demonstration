@@ -16,9 +16,10 @@ func main() {
 	/* Get the API Credentials */
 	API_Credentials := FileHandler.GetConfig()
 
-	//MasterService.GetSqlConfig(API_Credentials.ConnectionString)
-
+	/* Turn on HTTP Listener and act like an HTTP Server */
 	APIRouter.InitiateRouter(API_Credentials.Credentials)
+
+	MasterService.GetSqlConfig(API_Credentials.ConnectionString)
 
 	os.Exit(1)
 
@@ -30,6 +31,9 @@ func main() {
 
 	/* Input Order Info into API */
 	SEND_API_ORDERS(API_Credentials, CSV_RESULTS)
+
+	/* Turn on HTTP Listener and act like an HTTP Server */
+	APIRouter.InitiateRouter(API_Credentials.Credentials)
 }
 
 func PrintOrderID(CSV_RESULTS []Models.OrderContents) {
