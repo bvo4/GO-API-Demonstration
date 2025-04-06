@@ -22,12 +22,13 @@ func InitiateRouter(API_CREDENTIALS Models.Credentials) {
 	SetRouterHeaders()                    //Set up list of HTTP Headers to listen to
 
 	fmt.Println("HTTP Server turned on")
-	http.ListenAndServe(":8090", nil) //On Port 8090
+	http.ListenAndServe(":8090", nil) //Open on Port 8090
 }
 
 /* Credit: https://gobyexample.com/http-servers */
+/* Upon receiving a valid HTTP Request, use the Order Id to make the API Query and return the results to the user */
 func GetOrderDetails(w http.ResponseWriter, req *http.Request) {
-	OrderId := req.PathValue("OrderId")
+	OrderId := req.PathValue("OrderId") //Extract the parameter from the GET Request
 	//fmt.Fprintf(w, "Found: %s\n", OrderId)
 
 	/* Upon receiving an Order ID, initiate the API to call the third-party API and return the results fetched as a JSON */
