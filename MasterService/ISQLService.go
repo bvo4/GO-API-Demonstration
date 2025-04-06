@@ -1,6 +1,7 @@
 package MasterService
 
 import (
+	"API_DEMONSTRATION/Models"
 	"database/sql"
 	"fmt"
 	"log"
@@ -11,9 +12,10 @@ import (
 // _ is needed for pq to keep it in since it's needed on top of /sql
 
 /* https://go.dev/doc/database/open-handle */
-func GetSqlConfig(ConnectionString string) *sql.DB {
+func GetSqlConfig(ConnectionString Models.SQL_Conn) *sql.DB {
+
 	connString := fmt.Sprintf("server=%s;user id=%s;password=%s;port=%d",
-		"DESKTOP-91IQ0A5", "", "", 1433)
+		ConnectionString.Server, ConnectionString.UserId, ConnectionString.Password, ConnectionString.Port)
 
 	db, err := sql.Open("mssql", connString)
 
@@ -24,7 +26,6 @@ func GetSqlConfig(ConnectionString string) *sql.DB {
 	if err = db.Ping(); err != nil {
 		log.Fatal(err)
 	}
-	defer db.Close()
 
 	fmt.Println("SQL Connection Opened")
 

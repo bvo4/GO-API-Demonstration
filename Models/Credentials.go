@@ -6,7 +6,14 @@ type Credentials struct {
 }
 
 type Settings struct {
-	IsDebug          bool
-	ConnectionString string
-	Credentials      Credentials
+	IsDebug     bool
+	SQL_Conn    SQL_Conn
+	Credentials Credentials
+}
+
+type SQL_Conn struct {
+	Server   string
+	UserId   string
+	Password string
+	Port     int
 }
