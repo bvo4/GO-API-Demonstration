@@ -17,7 +17,7 @@ func GetSqlConfig(ConnectionString Models.SQL_Conn) *sql.DB {
 	connString := fmt.Sprintf("server=%s;user id=%s;password=%s;port=%d",
 		ConnectionString.Server, ConnectionString.UserId, ConnectionString.Password, ConnectionString.Port)
 
-	db, err := sql.Open("mssql", connString)
+	db, err := sql.Open("sqlserver", connString)
 
 	if err != nil {
 		log.Fatal((err))

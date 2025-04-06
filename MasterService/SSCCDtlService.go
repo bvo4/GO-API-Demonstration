@@ -2,17 +2,15 @@ package MasterService
 
 import (
 	"API_DEMONSTRATION/Models"
-	"context"
-	"database/sql"
-	"fmt"
 	"log"
 
-	"github.com/jackc/pgx/v5"
-	_ "github.com/jackc/pgx/v5/pgxpool"
-	"github.com/lib/pq"
+	mssql "github.com/denisenkom/go-mssqldb"
 )
 
-/* Source: https://go.dev/doc/tutorial/database-access */
+/*
+Source: https://go.dev/doc/tutorial/database-access
+https://github.com/denisenkom/go-mssqldb/blob/master/examples/bulk/bulk.go
+*/
 func SSCC_InsertSSCC(ConnectionString Models.SQL_Conn, EpcisDtl Models.ItemsTreeResult) {
 
 	MySQLConn := GetSqlConfig(ConnectionString)
@@ -21,7 +19,9 @@ func SSCC_InsertSSCC(ConnectionString Models.SQL_Conn, EpcisDtl Models.ItemsTree
 		log.Fatal(err)
 	}
 
-	stmt, err := BulkCopy.Prepare(pq.CopyIn("GTIN", "SerialNumber", "LotNum", "Qty"))
+	Tx := mssql.CopyIn("[API_DATABASE].[dbo].[SSCC]", mssql.BulkOptions{}, "GTIN", "SerialNumber", "LotNum", "Qty")
+
+	stmt, err := BulkCopy.Prepare(Tx)
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -31,28 +31,30 @@ func SSCC_InsertSSCC(ConnectionString Models.SQL_Conn, EpcisDtl Models.ItemsTree
 		if err != nil {
 			log.Fatal(err)
 		}
-		BulkInsertUsers()
 	}
 
-}
+	for _, user := range EpcisDtl.Containers {
+		for _, SubContainer := range user.Items {
 
-func BulkInsertUsers(db *sql.DB, Items []Models.Items) error {
-	query := `INSERT INTO users (name, email) VALUES (@userName, @userEmail)`
-
-	batch := &pgx.Batch{}
-	for _, user := range Items {
-		args := pgx.NamedArgs{
-			"Gtin":         user.Gtin,
-			"SerialNumber": user.SerialNumber,
-			"LotNum":       user.LotNum,
-			"Qty":          user.Amount,
+			_, err = stmt.Exec(SubContainer.Gtin, SubContainer.SerialNumber, SubContainer.LotNum, SubContainer.Amount)
+			if err != nil {
+				log.Fatal(err)
+			}
 		}
-		batch.Queue(query, args)
 	}
 
-	res, err := dbconn.Conn().PgConn().CopyFrom(context.Background(), f, "COPY csv_test FROM STDIN (FORMAT csv)")
+	_, err = stmt.Exec()
 	if err != nil {
-		panic(err)
+		log.Fatal(err)
 	}
-	fmt.Print(res.RowsAffected())
+
+	err = stmt.Close()
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	err = BulkCopy.Commit()
+	if err != nil {
+		log.Fatal(err)
+	}
 }
