@@ -19,9 +19,7 @@ func GetSqlConfig(ConnectionString Models.SQL_Conn) *sql.DB {
 
 	db, err := sql.Open("sqlserver", connString)
 
-	if err != nil {
-		log.Fatal((err))
-	}
+	Models.CheckError(err)
 
 	if err = db.Ping(); err != nil {
 		log.Fatal(err)

@@ -30,9 +30,7 @@ func Write_HTTP_GET(OrderId string, API_Credentials *HTTPServices.HEADER_VALUES)
 func Send_HTTP_GET(URI string, HEADER_PARAMS map[string]string) string {
 	//Get the Request URI using the OrderID
 	r, err := http.NewRequest(http.MethodGet, URI, nil)
-	if err != nil {
-		panic(err)
-	}
+	Models.CheckError(err)
 
 	/* HTTP CLIENT SETTINGS */
 	client := &http.Client{
@@ -48,9 +46,7 @@ func Send_HTTP_GET(URI string, HEADER_PARAMS map[string]string) string {
 
 	response, err := client.Do(r)
 
-	if err != nil {
-		panic(err)
-	}
+	Models.CheckError(err)
 
 	body, err := io.ReadAll(response.Body)
 	sb := string(body)
