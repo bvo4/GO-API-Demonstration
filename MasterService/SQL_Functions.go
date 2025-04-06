@@ -8,14 +8,14 @@ import (
 )
 
 /* Prepares the SQL Transaction statement and copies the item set in */
-func SQLPrepareBulkCopy(BulkCopy *sql.Tx, EpcisDtl []Models.Items) *sql.Stmt {
-	Tx := mssql.CopyIn("[API_DATABASE].[dbo].[SSCC]", mssql.BulkOptions{}, "GTIN", "SerialNumber", "LotNum", "Qty")
+func SQLPrepareBulkCopy(SQL_SETTINGS Models.SQL_Target, BulkCopy *sql.Tx, EpcisDtl []Models.Items) *sql.Stmt {
+	Tx := mssql.CopyIn(SQL_SETTINGS.Table, mssql.BulkOptions{}, SQL_SETTINGS.Columns...)
 
 	stmt, err := BulkCopy.Prepare(Tx)
 	Models.CheckError(err)
 
-	for _, user := range EpcisDtl {
-		_, err = stmt.Exec(user.Gtin, user.SerialNumber, user.LotNum, user.Amount)
+	for _, OrderItem := range EpcisDtl {
+		_, err = stmt.Exec(OrderItem.Gtin, OrderItem.SerialNumber, OrderItem.LotNum, OrderItem.Amount)
 		Models.CheckError(err)
 	}
 	return stmt

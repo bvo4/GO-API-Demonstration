@@ -2,6 +2,6 @@ package MasterService
 
 import "API_DEMONSTRATION/Models"
 
-func InsertSSCC(ConnectionString Models.SQL_Conn, EpcisDtl []Models.Items) {
-	SSCC_InsertSSCC(ConnectionString, EpcisDtl)
+func InsertSSCC(CREDENTIALS Models.Settings, EpcisDtl []Models.Items) {
+	SSCC_InsertSSCC(CREDENTIALS, EpcisDtl)
 }
