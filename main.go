@@ -1,6 +1,7 @@
 package main
 
 import (
+	"API_DEMONSTRATION/APIRouter"
 	"API_DEMONSTRATION/Controller"
 	"API_DEMONSTRATION/FileHandler"
 	"API_DEMONSTRATION/MasterService"
@@ -24,7 +25,7 @@ func main() {
 	SEND_API_ORDERS(API_Credentials, CSV_RESULTS)
 
 	/* Turn on HTTP Listener and act like an HTTP Server */
-	//APIRouter.InitiateRouter(API_Credentials.Credentials)
+	APIRouter.InitiateRouter(API_Credentials.Credentials)
 }
 
 /* Debug:  Prints out the list of Order Ids acquired */
