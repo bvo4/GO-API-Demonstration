@@ -7,7 +7,19 @@ import (
 )
 
 /* Queries to the given API and returns the Item Set from the HTTP Response */
-func GetItemsTreeOrderID(API_Credentials Models.Credentials, OrderId string) []Models.Items {
+func GetItemsTreeOrderID(API_Credentials Models.Credentials, OrderId string) Models.ItemsTreeResult {
+
+	//Get the URI needed for the HTTP Request
+	HTTP_CREDENTIALS := HTTPModels.ToApiCredentials(API_Credentials)
+	FullCase := HTTPServices.Write_HTTP_GET(OrderId, &HTTP_CREDENTIALS)
+
+	DEBUG_EXPOUND_API_RESULTS(FullCase)
+
+	return FullCase
+}
+
+/* Queries to the given API and returns the Item Set from the HTTP Response */
+func GetItemsOrderID(API_Credentials Models.Credentials, OrderId string) []Models.Items {
 
 	//Get the URI needed for the HTTP Request
 	HTTP_CREDENTIALS := HTTPModels.ToApiCredentials(API_Credentials)

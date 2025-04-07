@@ -6,7 +6,6 @@ import (
 	"encoding/json"
 	"fmt"
 	"net/http"
-	"strings"
 )
 
 var HTTPAPI_CREDENTIALS Models.Credentials
@@ -30,76 +29,21 @@ func InitiateRouter(API_CREDENTIALS Models.Credentials) {
 /* Upon receiving a valid HTTP Request, use the Order Id to make the API Query and return the results to the user */
 func GetOrderDetails(w http.ResponseWriter, req *http.Request) {
 	OrderId := req.PathValue("OrderId") //Extract the parameter from the GET Request
-	//fmt.Fprintf(w, "Found: %s\n", OrderId)
 
 	/* Upon receiving an Order ID, initiate the API to call the third-party API and return the results fetched as a JSON */
 	sb := Controller.GetItemsTreeOrderID(HTTPAPI_CREDENTIALS, OrderId)
-	JSONPARSE, _ := json.Marshal(sb) //Convert back to Json Payload
-	ItemReturn := EncryptInformation(JSONPARSE)
+
+	/* Encrypt and Mask the information before sendin ganything out */
+	ItemReturn := EncryptInformation(sb)
 
 	fmt.Fprintf(w, string(ItemReturn)) //Write into the HTTP Response Body the JSON Contents
 }
 
-func EncryptInformation(JSONPARSE []byte) []byte {
-	var ItemReturn Models.ItemsTreeResult
+/* Opens the API Results, goes through every Item and Container and masks the information presented */
+func EncryptInformation(ItemReturn Models.ItemsTreeResult) []byte {
 
-	err := json.Unmarshal(JSONPARSE, &ItemReturn)
-	Models.CheckError(err)
-
-	MaskItemsTreeResult(ItemReturn)
+	/*  */
+	Models.MaskItemsTreeResult(&ItemReturn)
 	JSON_REPACKAGE, _ := json.Marshal(ItemReturn)
 	return JSON_REPACKAGE
-}
-
-func MaskItemsTreeResult(ItemsTree Models.ItemsTreeResult) {
-
-	ItemsTree.Containers = RecurseContainers(ItemsTree.Containers)
-
-	/*
-		if len(ItemsTree.Items) > 0 {
-			for _, SelectedItem := range ItemsTree.Items {
-				MaskItem(&SelectedItem)
-			}
-		}
-	*/
-
-	fmt.Println("Containers: ", len(ItemsTree.Containers))
-}
-
-func RecurseContainers(SelectedContainer []Models.Containers) []Models.Containers {
-	if len(SelectedContainer) > 0 {
-		for i, ChildContainer := range SelectedContainer {
-			SelectedContainer[i] = MaskContainer(ChildContainer)
-			RecurseContainers(ChildContainer.Containers)
-
-			/*
-				if len(ChildContainer.Items) > 0 {
-					for _, ChildItem := range ChildContainer.Items {
-						MaskItem(&ChildItem)
-					}
-				}
-			*/
-		}
-	}
-	return SelectedContainer
-}
-
-func MaskContainer(ChildContainer Models.Containers) Models.Containers {
-	ChildContainer.SerialNumber = MaskText(ChildContainer.SerialNumber)
-	ChildContainer.Number = MaskText(ChildContainer.Number)
-	ChildContainer.LotNum = MaskText(ChildContainer.LotNum)
-	ChildContainer.Expiry = MaskText(ChildContainer.Expiry)
-	return ChildContainer
-}
-
-func MaskItem(ChildItem *Models.Items) {
-	ChildItem.Gtin = MaskText(ChildItem.Gtin)
-	ChildItem.LotNum = MaskText(ChildItem.LotNum)
-	ChildItem.Expiry = MaskText(ChildItem.Expiry)
-	ChildItem.Ndc = MaskText(ChildItem.Ndc)
-	ChildItem.Upc = MaskText(ChildItem.Upc)
-}
-
-func MaskText(StringSet string) string {
-	return strings.Repeat("*", len(StringSet))
 }

@@ -3,6 +3,7 @@ package MasterService
 import (
 	"API_DEMONSTRATION/Models"
 	"database/sql"
+	"fmt"
 
 	mssql "github.com/denisenkom/go-mssqldb"
 )
@@ -14,6 +15,7 @@ func SQLPrepareBulkCopy(SQL_SETTINGS Models.SQL_Target, BulkCopy *sql.Tx, EpcisD
 	stmt, err := BulkCopy.Prepare(Tx)
 	Models.CheckError(err)
 
+	/* Loads the data into the SQL transaction */
 	for _, OrderItem := range EpcisDtl {
 		_, err = stmt.Exec(OrderItem.Gtin, OrderItem.SerialNumber, OrderItem.LotNum, OrderItem.Amount)
 		Models.CheckError(err)
@@ -31,4 +33,6 @@ func SQLExecStatement(stmt *sql.Stmt, BulkCopy *sql.Tx) {
 
 	err = BulkCopy.Commit()
 	Models.CheckError(err)
+
+	fmt.Println("Transaction Successful")
 }

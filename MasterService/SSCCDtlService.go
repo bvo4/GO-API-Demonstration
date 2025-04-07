@@ -19,4 +19,5 @@ func SSCC_InsertSSCC(CREDENTIALS Models.Settings, EpcisDtl []Models.Items) {
 
 	//Execute Sql Transaction
 	SQLExecStatement(stmt, BulkCopy)
+
 }

@@ -18,6 +18,7 @@ func ExtractAllItems(ItemsTree Models.ItemsTreeResult) []Models.Items {
 	return ItemList
 }
 
+/* Extracts all items from the Container */
 func ExtractFromContainer(ContainerList Models.Containers) []Models.Items {
 	if len(ContainerList.Containers) < 1 {
 		return ContainerList.Items

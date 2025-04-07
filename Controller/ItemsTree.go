@@ -5,11 +5,11 @@ import (
 	"API_DEMONSTRATION/Route"
 )
 
-func GetItemsTreeGTIN(GTIN string, SerialNumber string) {
-
+func GetItemsTreeOrderID(API_Credentials Models.Credentials, OrderID string) Models.ItemsTreeResult {
+	return Route.GetItemsTreeOrderID(API_Credentials, OrderID)
 }
 
 /* Query the API and get the Order Items */
-func GetItemsTreeOrderID(API_Credentials Models.Credentials, OrderID string) []Models.Items {
-	return Route.GetItemsTreeOrderID(API_Credentials, OrderID)
+func GetItemsOrderID(API_Credentials Models.Credentials, OrderID string) []Models.Items {
+	return Route.GetItemsOrderID(API_Credentials, OrderID)
 }
