@@ -16,13 +16,13 @@ func main() {
 	API_Credentials := FileHandler.GetConfig()
 
 	/* Get Order Info from local .CSV file */
-	CSV_RESULTS := FileHandler.ReadCSV()
+	//CSV_RESULTS := FileHandler.ReadCSV()
 
 	//DEBUG:  PRINT OUT ORDERS
-	PrintOrderID(CSV_RESULTS)
+	//PrintOrderID(CSV_RESULTS)
 
 	/* Input Order Info into API */
-	SEND_API_ORDERS(API_Credentials, CSV_RESULTS)
+	//SEND_API_ORDERS(API_Credentials, CSV_RESULTS)
 
 	/* Turn on HTTP Listener and act like an HTTP Server */
 	APIRouter.InitiateRouter(API_Credentials.Credentials)

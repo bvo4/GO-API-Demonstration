@@ -29,7 +29,7 @@ func GetAppSettingFile() string {
 	Models.CheckError(err)
 
 	//Check for the appsetting.json file to load program settings
-	DirectoryPath += "\\appsetting.json"
+	DirectoryPath += "//appsetting.json"
 	return DirectoryPath
 }
 
