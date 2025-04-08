@@ -32,6 +32,7 @@ func ExtractFromContainer(ContainerList Models.Containers) []Models.Items {
 	return ItemSet
 }
 
+/* Just states the total # inside the set */
 func DEBUG_EXPOUND_API_RESULTS(Results Models.ItemsTreeResult) {
 	fmt.Println("Item Len:", len(Results.Items))
 	fmt.Println("Container Len:", len(Results.Containers))

@@ -42,7 +42,7 @@ func GetOrderDetails(w http.ResponseWriter, req *http.Request) {
 /* Opens the API Results, goes through every Item and Container and masks the information presented */
 func EncryptInformation(ItemReturn Models.ItemsTreeResult) []byte {
 
-	/*  */
+	/* Applies a mask to the entire data set */
 	Models.MaskItemsTreeResult(&ItemReturn)
 	JSON_REPACKAGE, _ := json.Marshal(ItemReturn)
 	return JSON_REPACKAGE
